@@ -1,7 +1,7 @@
 function convertToVietnameseCurrency(number) {
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
-const url = "https://script.google.com/macros/s/AKfycbxjJi0pX_T_BvYSeGQaYjF1SDorX37fP8OA6Z4f33Kk1H0C7bze0J9wHuMZlF81Wqo/exec"
+const url = "https://script.google.com/macros/s/AKfycby-T-xiop1zI3h4JluKfxUXZwPG54i4jT4GnDGM2fvIhJDHqaUu0Vy_vQKa1aBzDeE/exec"
 const radioOptions = []
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
@@ -16,6 +16,7 @@ var codeValue = getUrlParameter('code');
 var sizevalue = getUrlParameter('size');
 const api1 = fetch(url +'?action=getitem&item_code='+codeValue)
 const api2 = fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
+loading("show");
 Promise.all([api1, api2]).then((values) => {
     const [listIteamSameType, itemDetail] = values;
     listIteamSameType.json().then((data) => {
@@ -161,6 +162,7 @@ Promise.all([api1, api2]).then((values) => {
                     window.location.href = urlBeforeQuestionMark + '?code='+codeValue+'&size='+this.value;
                 });
             });
+            loading("hide");
     })
 });
 
@@ -168,3 +170,24 @@ function buyProduct() {
     var totalNumber = document.getElementById('total-number').value;
     window.location.href = "contact.html?code="+codeValue+'&size='+sizevalue + '&number='+totalNumber;
 }
+
+/**
+ * Xử lý bật tắt loading
+ * @param {*} mode 
+ */
+function loading(mode){
+    if(mode == "show"){
+        $('.loading').addClass("element-show");
+        $('.loading').removeClass("element-hide");
+    }else{
+        $('.loading').removeClass("element-show");
+        $('.loading').addClass("element-hide");
+    }
+}
+
+/**
+ * Quay về trang chủ
+ */
+$('.company-name').on('click',function (event) {
+window.location.href = "index.html";
+});

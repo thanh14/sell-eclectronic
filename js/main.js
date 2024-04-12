@@ -1,7 +1,7 @@
 (function ($) {
     "use strict";
 
-    var url = "https://script.google.com/macros/s/AKfycbxjJi0pX_T_BvYSeGQaYjF1SDorX37fP8OA6Z4f33Kk1H0C7bze0J9wHuMZlF81Wqo/exec";
+    var url = "https://script.google.com/macros/s/AKfycby-T-xiop1zI3h4JluKfxUXZwPG54i4jT4GnDGM2fvIhJDHqaUu0Vy_vQKa1aBzDeE/exec";
     var ul = document.querySelector('.paging');
     var allPages = 15;
     var lstItem = [];
@@ -146,7 +146,7 @@
         
         $("div.lst-item div").remove();
         lstItemDisplay.forEach(item => {
-            let itemHTML = `<div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            let itemHTML = `<div id=` + item.item_code + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
@@ -167,7 +167,7 @@
                                 </div>
                             </div>`;
 
-            $(itemHTML).data('recordId', item.item_code);
+            $(itemHTML).data('itemCode', item.item_code);
             $("div.lst-item").append(itemHTML);
                             
         });
@@ -177,8 +177,9 @@
     /**
      * Sự kiện nhấn vào sản phẩm
      */
-    $('.lst-item').on("click", ".item-name", function () {
-        window.location = "http://127.0.0.1:5500/index.html";
+    $('.lst-item').on("click", ".item-box", function () {
+        var recordId = this.getAttribute("Id");
+        window.location.href = "detail.html?code="+recordId;
         // console.log("Nơi xử lý mở trang chi tiết")
     })
 
@@ -202,6 +203,13 @@
     $('.paging-numb').on("click", ".numb", function () {
         var recordId = $(this).data('recordId');
         pagingData(recordId);
+    });
+    
+    /**
+     * Quay về trang chủ
+     */
+    $('.company-name').on('click',function (event) {
+    window.location.href = "index.html";
     });
 
     /**
@@ -248,8 +256,6 @@
             $('.btn-next').addClass("element-show");
             $('.btn-next').removeClass("element-hide");
         }
-    
-        
     }
     
 })(jQuery);

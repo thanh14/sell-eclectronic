@@ -9616,7 +9616,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .product-item {
-  transition: .5s;
+  /* transition: .5s; */
 }
 
 .product-action {
@@ -9638,7 +9638,7 @@ a.text-dark:hover, a.text-dark:focus {
   opacity: 0;
 }
 
-.product-item:hover {
+/* .product-item:hover {
   box-shadow: 0 0 30px #DDDDDD;
 }
 
@@ -9650,8 +9650,8 @@ a.text-dark:hover, a.text-dark:focus {
   opacity: 1;
   margin-top: 0;
   transition: .3s 0s;
-}
-
+} */
+/* 
 .product-item:hover .product-action a.btn:nth-child(2) {
   opacity: 1;
   margin-top: 0;
@@ -9668,19 +9668,19 @@ a.text-dark:hover, a.text-dark:focus {
   opacity: 1;
   margin-top: 0;
   transition: .3s .15s;
-}
+} */
 
-.product-item .product-img img {
+/* .product-item .product-img img {
   transition: .5s;
-}
+} */
 
-.product-item:hover .product-img img {
+/* .product-item:hover .product-img img {
   transform: scale(1.2);
-}
+} */
 
-.product-item .btn:hover {
+/* .product-item .btn:hover {
   color: #FFD333 !important;
-}
+} */
 
 .table.table-borderless thead tr,
 .table.table-borderless tbody tr:not(:last-child) {
@@ -9830,4 +9830,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 .img-fb{
   height: 37px;
+}
+
+.item-box:hover{
+  cursor: pointer;
+}
+
+.dropdown-item:hover{
+  cursor: pointer;
 }
