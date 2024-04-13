@@ -1,14 +1,14 @@
 (function ($) {
     "use strict";
 
-    var url = "https://script.google.com/macros/s/AKfycbwVJPIqDjsosex0vx6g2BghW7SDy2pM9os1cdj8T9xIl4zWPNngdppxUAtlJTpnBvY/exec";
+    var url = "https://script.google.com/macros/s/AKfycbyT0UIYLArvCMuQZeiG0cYnCmDSiFterpvq1roE6sXSklprhWqVqp3S7NwYGBwtnlU/exec";
     var ul = document.querySelector('.paging');
     var allPages = 15;
     var lstItem = [];
     var lstItemDisplay = [];
     var totalItem = 0;
     var currentPage = 1;
-    var pageSize = 20;
+    var pageSize = 24;
     
     // Dropdown on mouse hover
     $(document).ready(function () {
@@ -138,7 +138,7 @@
         let startIndex = 0,
         endIndex = 19;
         startIndex = pageIndex == 1 ? 0 : (pageIndex*pageSize - pageSize);
-        endIndex = pageIndex == 1 ? 20 : pageIndex*pageSize;
+        endIndex = pageIndex == 1 ? pageSize : pageIndex*pageSize;
         elem(Math.floor(totalItem/pageSize) + 1, pageIndex);
 
         lstItemDisplay = lstItem.slice(startIndex, endIndex);
@@ -146,11 +146,7 @@
         
         $("div.lst-item div").remove();
         lstItemDisplay.forEach(item => {
-<<<<<<< Updated upstream
-            let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
-=======
-            let itemHTML = `<div id=` + item.item_code + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box" value=`+item.size+`>
->>>>>>> Stashed changes
+            let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-2 col-md-3 col-sm-4 col-6 pb-1 item-box">
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
@@ -182,8 +178,8 @@
      * Sự kiện nhấn vào sản phẩm
      */
     $('.lst-item').on("click", ".item-box", function () {
-        var recordId = this.getAttribute("Id");
-        var recorSize = this.getAttribute("Value");
+        var recordId = this.getAttribute("code");
+        var recorSize = this.getAttribute("size");
         window.location.href = "detail.html?code="+recordId+"&size="+recorSize;
         // console.log("Nơi xử lý mở trang chi tiết")
     })
@@ -265,3 +261,18 @@
     
 })(jQuery);
 
+// Product Quantity
+$('.quantity button').on('click', function () {
+    var button = $(this);
+    var oldValue = button.parent().parent().find('input').val();
+    if (button.hasClass('btn-plus')) {
+        var newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    button.parent().parent().find('input').val(newVal);
+});
