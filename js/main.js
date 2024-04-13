@@ -146,7 +146,7 @@
         
         $("div.lst-item div").remove();
         lstItemDisplay.forEach(item => {
-            let itemHTML = `<div id=` + item.item_code + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
+            let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center py-4">
-                                        <div class="h6 item-name text-decoration-none text-truncate" href="">` + item.item_name + `</div>
+                                        <div class="h6 item-name text-decoration-none text-truncate" href="">` + item.item_name + " - " + item.size + " inchs" + `</div>
                                         <div class="align-items-center mt-2">
                                             <h6 class="text-muted ml-2"><del>$` + formatMoney(item.org_price) + `</del>
                                             <h5>$` + formatMoney(item.sale_price) + `</h5>
@@ -178,8 +178,9 @@
      * Sự kiện nhấn vào sản phẩm
      */
     $('.lst-item').on("click", ".item-box", function () {
-        var recordId = this.getAttribute("Id");
-        window.location.href = "detail.html?code="+recordId;
+        var itemCode = this.getAttribute("code");
+        var size = this.getAttribute("size");
+        window.location.href = "detail.html?code="+itemCode+"&size="+size;
         // console.log("Nơi xử lý mở trang chi tiết")
     })
 
