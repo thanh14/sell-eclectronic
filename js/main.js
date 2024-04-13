@@ -146,7 +146,11 @@
         
         $("div.lst-item div").remove();
         lstItemDisplay.forEach(item => {
+<<<<<<< Updated upstream
             let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
+=======
+            let itemHTML = `<div id=` + item.item_code + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box" value=`+item.size+`>
+>>>>>>> Stashed changes
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
@@ -178,9 +182,9 @@
      * Sự kiện nhấn vào sản phẩm
      */
     $('.lst-item').on("click", ".item-box", function () {
-        var itemCode = this.getAttribute("code");
-        var size = this.getAttribute("size");
-        window.location.href = "detail.html?code="+itemCode+"&size="+size;
+        var recordId = this.getAttribute("Id");
+        var recorSize = this.getAttribute("Value");
+        window.location.href = "detail.html?code="+recordId+"&size="+recorSize;
         // console.log("Nơi xử lý mở trang chi tiết")
     })
 
