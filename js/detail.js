@@ -1,7 +1,7 @@
 function convertToVietnameseCurrency(number) {
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
-const url = "https://script.google.com/macros/s/AKfycbwVJPIqDjsosex0vx6g2BghW7SDy2pM9os1cdj8T9xIl4zWPNngdppxUAtlJTpnBvY/exec"
+const url = "https://script.google.com/macros/s/AKfycbyT0UIYLArvCMuQZeiG0cYnCmDSiFterpvq1roE6sXSklprhWqVqp3S7NwYGBwtnlU/exec"
 const radioOptions = []
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
@@ -41,7 +41,9 @@ Promise.all([api1, api2]).then((values) => {
                             '</div>';
           productContainer.innerHTML += productHtml;
         });
+
         return itemDetail.json();
+
     }).then((data) => {
         var lisData = data.data
         var item = lisData.item_detail;
@@ -159,6 +161,8 @@ Promise.all([api1, api2]).then((values) => {
 
             carouselItem.appendChild(img);
             imageCarousel.appendChild(carouselItem);
+            var imageCarouselDisplay = document.getElementById('product-carousel');
+            imageCarouselDisplay.style.display = "block"
         });
     }).then(() => {
         var radioButtons = document.querySelectorAll('input[type=radio][name="inches"]');
@@ -168,7 +172,9 @@ Promise.all([api1, api2]).then((values) => {
                     window.location.href = urlBeforeQuestionMark + '?code='+codeValue+'&size='+this.value;
                 });
             });
-            loading("hide");
+            setTimeout(() => {
+                loading("hide");
+            }, 0);
     })
 });
 
