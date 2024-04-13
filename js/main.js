@@ -1,7 +1,7 @@
 (function ($) {
     "use strict";
 
-    var url = "https://script.google.com/macros/s/AKfycby-T-xiop1zI3h4JluKfxUXZwPG54i4jT4GnDGM2fvIhJDHqaUu0Vy_vQKa1aBzDeE/exec";
+    var url = "https://script.google.com/macros/s/AKfycbwHab4hGpiFBE3mkXCz4W8LmTw1MtiD8dK6AwD8tzrA0rfb3x5ouhphUYHo3fymGxs/exec";
     var ul = document.querySelector('.paging');
     var allPages = 15;
     var lstItem = [];
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center py-4">
-                                        <div class="h6 item-name text-decoration-none text-truncate" href="">` + item.item_name + " - " + item.size + " inchs" + `</div>
+                                        <div class="h6 item-name text-decoration-none text-truncate" href="">` + item.item_name + `</div>
                                         <div class="align-items-center mt-2">
                                             <h6 class="text-muted ml-2"><del>$` + formatMoney(item.org_price) + `</del>
                                             <h5>$` + formatMoney(item.sale_price) + `</h5>

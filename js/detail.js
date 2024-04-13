@@ -1,7 +1,7 @@
 function convertToVietnameseCurrency(number) {
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
-const url = "https://script.google.com/macros/s/AKfycby-T-xiop1zI3h4JluKfxUXZwPG54i4jT4GnDGM2fvIhJDHqaUu0Vy_vQKa1aBzDeE/exec"
+const url = "https://script.google.com/macros/s/AKfycbwHab4hGpiFBE3mkXCz4W8LmTw1MtiD8dK6AwD8tzrA0rfb3x5ouhphUYHo3fymGxs/exec"
 const radioOptions = []
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
