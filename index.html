@@ -9,8 +9,8 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
+    <link rel="icon" type="image/png"  sizes="512x512" href="img/rel-icon.png">
+    
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
@@ -36,7 +36,7 @@
                     <div class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><span>Hải Phòng</span></div>
                 </div>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-7 d-flex justify-content-end" >
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <div class="company-name text-decoration-none d-lg-none">
                         <div class="h1 text-uppercase text-primary bg-dark px-2"><span>Xiaomi</span></div>
@@ -46,12 +46,8 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0">
-                            <div class="nav-item nav-link">Home</div>
-                            <div class="nav-item nav-link">Contact</div>
-                        </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block contact-pn">
-                            LH: 012 345 6789
+                            Liên Hệ: <a href="tel:0832697697">0832.697.697</a>
                         </div>
                     </div>
                 </nav>
@@ -59,65 +55,118 @@
         </div>
     </div>
     <!-- Navbar End -->
+<!-- Carousel Start -->
+<div class="container-fluid mb-3">
+    <div class="row px-xl-5">
+        <div class="col-lg-12">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="img/banner.png" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
 
 
-    <!-- Breadcrumb Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="#">Home</a>
-                    <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                    <span class="breadcrumb-item active">Shop List</span>
-                </nav>
+<!-- Featured Start -->
+<div class="container-fluid pt-5 d-sm-block d-none">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Miễn phí vận chuyển</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">An tâm về giá</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb End -->
-
+</div>
     <div class="container-fluid">
-        <div class="row px-xl-5">
+    <h4 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Tìm kiếm</span></h4>
+    <div class="row px-xl-5 d-flex">
+        <div class="input-group mb-3">
+            <input type="text" id="input-search" class="form-control" placeholder="Tìm kiếm sản phẩm" aria-label="Tìm kiếm sản phẩm" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary" id="btn-search" style="padding-left: -20%;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+  
+    <h4 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Chọn theo tiêu chí</span></h4>
+    <div class="row px-xl-5">
             <div class="col-12">
                 <div class="pb-1">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <div class="">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Kích thước</button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-item" href="#">32 inches</div>
-                                    <div class="dropdown-item" href="#">40 inches</div>
-                                    <div class="dropdown-item" href="#">42 inches</div>
-                                    <div class="dropdown-item" href="#">43 inches</div>
-                                    <div class="dropdown-item" href="#">48 inches</div>
-                                    <div class="dropdown-item" href="#">49 inches</div>
-                                    <div class="dropdown-item" href="#">50 inches</div>
-                                    <div class="dropdown-item" href="#">55 inches</div>
-                                    <div class="dropdown-item" href="#">60 inches</div>
-                                    <div class="dropdown-item" href="#">65 inches</div>
-                                    <div class="dropdown-item" href="#">70 inches</div>
-                                </div>
+                    <div class="d-flex mb-4">
+                            <div class="btn-group ml-2">
+                                <select class="form-select font-weight-bold" id="sel-category" name="sellistcategory">
+                                    <option>Loại sản phẩm</option>
+                                    <option value="tivi">Tivi</option>
+                                    <option value="tulanh">Tủ lạnh</option>
+                                    <option value="maygiat">Máy giặt</option>
+                                    <option value="dieuhoa">Điều hòa</option>
+                                </select>
                             </div>
                             <div class="btn-group ml-2">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Giá</button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-item" href="#">Dưới 5 triệu</div>
-                                    <div class="dropdown-item" href="#">Từ 5 đến 7 triệu</div>
-                                    <div class="dropdown-item" href="#">Từ 7 đến 10 triệu</div>
-                                    <div class="dropdown-item" href="#">Từ 10 đến 15 triệu</div>
-                                    <div class="dropdown-item" href="#">Từ 15 đến 20 triệu</div>
-                                    <div class="dropdown-item" href="#">Trên 20 triệu</div>
-                                </div>
+                                <select class="form-select font-weight-bold" id="sel-prices" name="sellistPrice">
+                                    <option>Giá</option>
+                                    <option value="0-5">Dưới 5 triệu</option>
+                                    <option value="5-7">Từ 5 đến 7 triệu</option>
+                                    <option value="7-10">Từ 7 đến 10 triệu</option>
+                                    <option value="10-15">Từ 10 đến 15 triệu</option>
+                                    <option value="15-20">Từ 15 đến 20 triệu</option>
+                                    <option value="20-999">Trên 20 triệu</option>
+                                </select>
                             </div>
-                        </div>
+                            <div class="btn-group ml-2" id="div-size" style="display: none;">
+                                <select class="form-select font-weight-bold" id="sel-inches" name="sellistinches">
+                                    <option>Kích thước</option>
+                                    <option value="32">32 inches</option>
+                                    <option value="40">40 inches</option>
+                                    <option value="42">42 inches</option>
+                                    <option value="43">43 inches</option>
+                                    <option value="48">48 inches</option>
+                                    <option value="49">49 inches</option>
+                                    <option value="50">50 inches</option>
+                                    <option value="55">55 inches</option>
+                                    <option value="60">60 inches</option>
+                                    <option value="65">65 inches</option>
+                                    <option value="70">70 inches</option>
+                                </select>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Danh sách sản phẩm</span></h2>
 
 
     <!-- Shop Start -->
-    <div class="container-fluid">
+    <div class="container-fluid text-center">
         <div class="wait-minutes">
             <div>Vui lòng đợi một chút</div>
         </div>
@@ -158,13 +207,28 @@
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-secondary mt-5">
-        <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+        <div class="row border-top mx-xl-5 py-4 d-flex justify-content-between" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0 d-flex align-items-center">
-                <p class="mb-md-0 text-center text-md-left text-secondary">Địa chỉ: Hải Phòng
+                <p class="mb-md-0 text-center text-md-left text-secondary">Địa chỉ: 351 Tôn Đức Thắng, An Thái, An Dương, Hải Phòng
                 </p>
             </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-zalo" src="img/favicon.ico" alt="">
+            <div class="col-md-6 px-xl-0 text-center text-md-right d-flex justify-content-end">
+                <div class="d-flex">
+                <div id="zaloPhoneLink" class="d-none d-md-block">
+                    <a target="_blank" href="https://chat.zalo.me/?phone=0832697697">
+                        <img class="img-zalo" src="img/favicon.ico" alt="">
+                    </a>
+                </div>
+
+                <div id="zaloAppLink" class="d-block d-md-none">
+                    <a target="_blank" href="https://zalo.me/0832697697">
+                        <img class="img-zalo" src="img/favicon.ico" alt="">
+                    </a>
+                </div>
+
+                   
+                    <p style="margin: 5px;">Zalo: 0832697697</p>
+                </div>
                 <img class="img-fb" src="img/facebook.png" alt="">
             </div>
         </div>
@@ -181,6 +245,7 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+    </div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -194,6 +259,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+   
 </body>
 
 </html>

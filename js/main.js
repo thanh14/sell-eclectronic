@@ -1,14 +1,15 @@
+var lstItem = [];
+var lstItemFilter = [];
 (function ($) {
     "use strict";
 
     var url = "https://script.google.com/macros/s/AKfycbyUryPrV60u6FhQmt7CO6nRwBRxylG84LWV0C885UnIxHZoFfQfEFjrdCknqfsBze4/exec";
     var ul = document.querySelector('.paging');
     var allPages = 15;
-    var lstItem = [];
     var lstItemDisplay = [];
     var totalItem = 0;
     var currentPage = 1;
-    var pageSize = 20;
+    var pageSize = 24;
     
     // Dropdown on mouse hover
     $(document).ready(function () {
@@ -126,7 +127,7 @@
      * @param {*} pageIndex 
      * @returns 
      */
-    function pagingData(pageIndex){
+    function pagingData(pageIndex, listItemFilter){
         loading("show");
         if(pageIndex <= 0){
             pageIndex = 1;
@@ -138,15 +139,18 @@
         let startIndex = 0,
         endIndex = 19;
         startIndex = pageIndex == 1 ? 0 : (pageIndex*pageSize - pageSize);
-        endIndex = pageIndex == 1 ? 20 : pageIndex*pageSize;
+        endIndex = pageIndex == 1 ? pageSize : pageIndex*pageSize;
         elem(Math.floor(totalItem/pageSize) + 1, pageIndex);
-
-        lstItemDisplay = lstItem.slice(startIndex, endIndex);
+        if (listItemFilter != null) {
+            lstItemDisplay = listItemFilter.slice(startIndex, endIndex);
+        } else {
+            lstItemDisplay = lstItem.slice(startIndex, endIndex);
+        }
 
         
         $("div.lst-item div").remove();
         lstItemDisplay.forEach(item => {
-            let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-3 col-md-4 col-sm-6 pb-1 item-box">
+            let itemHTML = `<div code=` + item.item_code + ` size=` + item.size + ` class="col-lg-2 col-md-3 col-sm-4 col-6 pb-1 item-box">
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
@@ -178,9 +182,9 @@
      * Sự kiện nhấn vào sản phẩm
      */
     $('.lst-item').on("click", ".item-box", function () {
-        var itemCode = this.getAttribute("code");
-        var size = this.getAttribute("size");
-        window.location.href = "detail.html?code="+itemCode+"&size="+size;
+        var recordId = this.getAttribute("code");
+        var recorSize = this.getAttribute("size");
+        window.location.href = "detail.html?code="+recordId+"&size="+recorSize;
         // console.log("Nơi xử lý mở trang chi tiết")
     })
 
@@ -259,5 +263,90 @@
         }
     }
     
+    $(document).ready(function(){
+        $('#sel-category').on('change', function(){
+            var selectedValue = $(this).val();
+            var divSize = document.getElementById('div-size');
+            switch(selectedValue) {
+                case "tivi":
+                    divSize.style.display = "block"
+                    break;
+                case "tulanh":
+                    divSize.style.display = "none"
+                    break;
+                case "maygiat":
+                    divSize.style.display = "none"
+                    break;
+                case "dieuhoa":
+                    divSize.style.display = "none"
+                    break;
+                default:
+                    divSize.style.display = "none"
+              }
+            // if (selectedValueArray.length > 1) {
+            // lstItemFilter = lstItem.filter(function(item) {
+            //     return parseInt(item.sale_price) >= parseInt(selectedValueArray[0]*1000000) && parseInt(item.sale_price) <=  parseInt(selectedValueArray[1]*1000000);
+            // });
+            // pagingData(1, lstItemFilter);
+            // } else {
+            //     pagingData(1);
+            // }
+        });
+        $('#sel-prices').on('change', function(){
+            var selectedValue = $(this).val();
+            var selectedValueArray = selectedValue.split('-');
+            if (selectedValueArray.length > 1) {
+            lstItemFilter = lstItem.filter(function(item) {
+                return parseInt(item.sale_price) >= parseInt(selectedValueArray[0]*1000000) && parseInt(item.sale_price) <=  parseInt(selectedValueArray[1]*1000000);
+            });
+            pagingData(1, lstItemFilter);
+            } else {
+                pagingData(1);
+            }
+        });
+        $('#sel-inches').on('change', function(){
+            var selectedValue = $(this).val();
+            if (selectedValue != null) {
+            lstItemFilter = lstItem.filter(function(item) {
+                return parseInt(item.size) == selectedValue
+            });
+            pagingData(1, lstItemFilter);
+            } else {
+                pagingData(1);
+            }
+        });
+        $('#btn-search').on('click', function(){
+            var searchValue = $('#input-search').val();
+            lstItemFilter = lstItem.filter(function(item) {
+                return item.item_name.toLowerCase().includes(searchValue.toLowerCase())
+            });
+            pagingData(1, lstItemFilter);
+          });
+    
+        $('#input-search').on('keypress', function(event){
+        if (event.which === 13) { // Kiểm tra phím Enter được nhấn
+            var searchValue = $(this).val();
+            lstItemFilter = lstItem.filter(function(item) {
+            return item.item_name.toLowerCase().includes(searchValue.toLowerCase())
+        });
+            pagingData(1, lstItemFilter);
+        }
+        });
+    });
 })(jQuery);
 
+// Product Quantity
+$('.quantity button').on('click', function () {
+    var button = $(this);
+    var oldValue = button.parent().parent().find('input').val();
+    if (button.hasClass('btn-plus')) {
+        var newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    button.parent().parent().find('input').val(newVal);
+});

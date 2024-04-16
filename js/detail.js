@@ -15,17 +15,13 @@ function getUrlParameter(name) {
 var codeValue = getUrlParameter('code');
 var sizevalue = getUrlParameter('size');
 const api1 = fetch(url +'?action=getitem&item_code='+codeValue)
+console.log(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
 const api2 = fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
 loading("show");
 Promise.all([api1, api2]).then((values) => {
     const [listIteamSameType, itemDetail] = values;
     listIteamSameType.json().then((data) => {
         var listItems = data.data.lst_item
-        listItems.forEach(d => {
-            if (d.item_code == "TV_01" &&  !radioOptions.find(option => option.id === d.size)) {
-                radioOptions.push({ id: d.size, label: d.size +" inches" });
-            }
-        });
         const randomProducts = listItems.sort(() => Math.random() - 0.5).slice(0, 6);
         var productContainer = document.getElementById("productContainer");
         productContainer.innerHTML = '';
@@ -45,67 +41,79 @@ Promise.all([api1, api2]).then((values) => {
                             '</div>';
           productContainer.innerHTML += productHtml;
         });
+
         return itemDetail.json();
+
     }).then((data) => {
         var lisData = data.data
         var item = lisData.item_detail;
         console.log(item)
         var itemName = document.getElementById('item-name');
         itemName.textContent = item.item_name;
+        specifications = item.specifications
+        specifications.forEach(element => {
+            if (!radioOptions.find(option => option.id === element.size)) {
+                radioOptions.push({ id: element.size, label: element.size +" inches" });
+            }
+        });
+        var specification = specifications.filter(function(data) {
+            return data.size == sizevalue;
+        });
+        specification = specification[0]
 
         var description = document.getElementById('description');
-        description.textContent = item.description;
+        description.textContent = specification.description;
 
         var salePrice = document.getElementById('sale-price');
-        salePrice.textContent = convertToVietnameseCurrency(item.sale_price);
+        salePrice.textContent = convertToVietnameseCurrency(specification.sale_price);
 
         var orgPrice = document.getElementById('org-price');
-        orgPrice.textContent = convertToVietnameseCurrency(item.org_price);
+        orgPrice.textContent = convertToVietnameseCurrency(specification.org_price);
 
         var sellQuantity = document.getElementById('sell-quantity');
-        sellQuantity.textContent = item.sell_quantity;
+        sellQuantity.textContent = specification.sell_quantity;
 
         var descriptionDetail = document.getElementById('description-detail');
-        descriptionDetail.textContent = item.description_detail;
+        descriptionDetail.textContent = specification.description_detail;
 
         var resolution = document.getElementById('resolution');
-        resolution.textContent = item.resolution;
+        resolution.textContent = specification.resolution;
         
         var view = document.getElementById('view');
-        view.textContent = item.view;
+        view.textContent = specification.view;
 
         var refreshRate = document.getElementById('refresh-rate');
-        refreshRate.textContent = item.refresh_rate;
+        refreshRate.textContent = specification.refresh_rate;
         
         var power = document.getElementById('power');
-        power.textContent = item.power;
+        power.textContent = specification.power;
 
         var dimension = document.getElementById('dimension');
-        dimension.textContent = item.dimension;
+        dimension.textContent = specification.dimension;
 
         var outMemory = document.getElementById('out-memory');
-        outMemory.textContent = item.out_memory;
+        outMemory.textContent = specification.out_memory;
 
         var inMemory = document.getElementById('in-memory');
-        inMemory.textContent = item.in_memory;
+        inMemory.textContent = specification.in_memory;
         
         var cpu = document.getElementById('cpu');
-        cpu.textContent = item.cpu;
+        cpu.textContent = specification.cpu;
 
         var gpu = document.getElementById('gpu');
-        gpu.textContent = item.gpu;
+        gpu.textContent = specification.gpu;
 
         var soundTech = document.getElementById('sound-tech');
-        soundTech.textContent = item.sound_tech;
+        soundTech.textContent = specification.sound_tech;
         
         var speakerPower = document.getElementById('speaker-power');
-        speakerPower.textContent = item.speaker_power;
+        speakerPower.textContent = specification.speaker_power;
 
         var weight = document.getElementById('weight');
-        weight.textContent = item.weight;
+        weight.textContent = specification.weight;
 
         var remainQuantity = document.getElementById('remain-quantity');
-        if (item.remain_quantity > 0) {
+        if (specification.remain_quantity > 0) {
             remainQuantity.textContent = "Còn hàng"
             remainQuantity.style.color = 'limegreen';
         } else {
@@ -134,7 +142,9 @@ Promise.all([api1, api2]).then((values) => {
     
             parentDiv.appendChild(div);
         });
-        var radio = document.getElementById(item.size);
+        var displayinches = document.getElementById('display-inches');
+        displayinches.style.setProperty("display", "block", "important");
+        var radio = document.getElementById(specification.size);
         if (radio) {
             radio.checked = true;
         }
@@ -153,6 +163,8 @@ Promise.all([api1, api2]).then((values) => {
 
             carouselItem.appendChild(img);
             imageCarousel.appendChild(carouselItem);
+            var imageCarouselDisplay = document.getElementById('product-carousel');
+            imageCarouselDisplay.style.display = "block"
         });
     }).then(() => {
         var radioButtons = document.querySelectorAll('input[type=radio][name="inches"]');
@@ -162,7 +174,9 @@ Promise.all([api1, api2]).then((values) => {
                     window.location.href = urlBeforeQuestionMark + '?code='+codeValue+'&size='+this.value;
                 });
             });
-            loading("hide");
+            setTimeout(() => {
+                loading("hide");
+            }, 0);
     })
 });
 
@@ -190,4 +204,9 @@ function loading(mode){
  */
 $('.company-name').on('click',function (event) {
 window.location.href = "index.html";
+});
+
+$('#guarantee').on('change', function(){
+    var selectedValue = $(this).val();
+    console.log(selectedValue)
 });
