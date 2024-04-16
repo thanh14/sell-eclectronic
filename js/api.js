@@ -1,5 +1,5 @@
 /*
-url: https://script.google.com/macros/s/AKfycbwVJPIqDjsosex0vx6g2BghW7SDy2pM9os1cdj8T9xIl4zWPNngdppxUAtlJTpnBvY/exec
+url: https://script.google.com/macros/s/AKfycbyUryPrV60u6FhQmt7CO6nRwBRxylG84LWV0C885UnIxHZoFfQfEFjrdCknqfsBze4/exec
 
 1. API đặt hàng
 url + ?action=insert&customer_name=lvtho&phone_number=0981283963&item_name=tivi_3&quantity=2&price=25000000&item_code=TV_01&address=Thái_bình&note=ghi chú
@@ -25,61 +25,88 @@ response:
 
 2. API lấy danh sách mặt hàng
 url + ?action=getitem
-response:
 {
     "result": "success",
     "data": {
         "lst_item": [
             {
+                "item_type": "TV",
                 "item_code": "TV_01",
                 "item_name": "Tivi xiaomi",
+                "size": 40,
+                "manufacture": "xiaomi",
                 "org_price": 11000000,
                 "sale_price": 10000000,
-                "size": 40,
-                "remain_quantity": 10,
-                "sell_quantity": 5,
-                "description": "Ti vi xiaomi",
-                "resolution": "3840x2160",
-                "view": 178,
-                "refresh_rate": "60Hz",
-                "power": "145W",
-                "dimension": "1285x289x806",
-                "out_memory": 1.5,
-                "in_memory": 8,
-                "cpu": "Lõi kép A64",
-                "gpu": "Mali-450 MP2",
-                "sound_tech": "Dolby Digital Plus; Dolby Atmos; FLAC; MP3; AAC; DTS Surround, DTS-HD; OGG",
-                "speaker_power": "2x10W",
-                "weight": 12,
-				        "description_detail": "mô tả chi tiết",
                 "image": [
-                    "ảnh 1",
-                    "ảnh 2"
+                    "https://drive.google.com/thumbnail?id=1pqAN6yGCNHie7anazYzFhPxWROkvJxyM",
+                    "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
+                ]
+            },
+            {
+                "item_type": "TV",
+                "item_code": "TV_02",
+                "item_name": "Xiaomi 2",
+                "size": 42,
+                "manufacture": "xiaomi",
+                "org_price": 12000000,
+                "sale_price": 6500000,
+                "image": []
+            },
+            {
+                "item_type": "TL",
+                "item_code": "TL_01",
+                "item_name": "Tủ lạnh sharp",
+                "capacity": 400,
+                "manufacture": "Sharp",
+                "org_price": 20000000,
+                "sale_price": 17000000,
+                "number_door": 4,
+                "image": [
+                    "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
+                ]
+            },
+            {
+                "item_type": "MG",
+                "item_code": "MG_01",
+                "item_name": "Máy giặt aqua",
+                "washing_volume": 10,
+                "type_door": "Cửa trên",
+                "manufacture": "Aqua",
+                "org_price": 7000000,
+                "sale_price": 5000000,
+                "image": [
+                    "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
+                ]
+            },
+            {
+                "item_type": "DH",
+                "item_code": "DH_01",
+                "item_name": "Điều hòa DH01",
+                "power": 5000,
+                "manufacture": "Panasonic",
+                "org_price": 10000000,
+                "sale_price": 10000000,
+                "way": "2 chiều",
+                "image": [
+                    "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
                 ]
             }
         ]
     }
 }
++ item_type: Loại hàng hóa - TV: tivi; TL: Tủ lạnh, MG: Máy giặt; DH: Điều hòa
 + item_code: Mã hàng
 + item_name: Tên hàng
 + org_price: Giá gốc
 + sale_price: Giá khuyến mại
 + size: kích thước (inches)
-+ remain_quantity: Số lượng tồn
-+ sell_quantity: Số lượng đã bán
-+ description: Mô tả
-+ resolution: Độ phân giải
-+ view: góc nhìn
-+ refresh_rate: Tốc độ làm mới
-+ power: Công suất
-+ dimension: Kích cỡ (dài x rộng)
-+ out_memory: Bộ nhớ ngoài
-+ in_memory: Bộ nhớ trong
-+ cpu: cpu
-+ gpu: gpu
-+ sound_tech: Công nghệ âm thanh
-+ weight: Trọng lượng
-+ description_detail: Mô tả chi tiết
++ power: Công suất (w)
++ way: Loại điều hòa (1 chiều/ 2 chiều)
++ washing_volume: Trọng lượng giặt của máy giặt (kg)
++ type_door: Loại cửa máy giặt
++ capacity: Dung tích tủ lạnh
++ number_door: Số cửa tủ lạnh
++ manufacture: Hãng
 + image: Danh sách ảnh sản phẩm
 
 
@@ -109,59 +136,66 @@ response:
 + logo: link ảnh logo
 
 4. Lấy chi tiết hàng hóa
-url + ?action=getdetailitem&item_code=TV_01
+url + ?action=getdetailitem&item_type=tl&item_code=TV_01
 response:
 {
     "result": "success",
     "data": {
         "item_detail": {
-            "item_code": "TV_01",
-            "item_name": "Tivi xiaomi",
-            "org_price": 11000000,
-            "sale_price": 10000000,
-            "size": 40,
-            "remain_quantity": 10,
-            "sell_quantity": 5,
-            "description": "Ti vi xiaomi",
-            "resolution": "3840x2160",
-            "view": 178,
-            "refresh_rate": "60Hz",
-            "power": "145W",
-            "dimension": "1285x289x806",
-            "out_memory": 1.5,
-            "in_memory": 8,
-            "cpu": "Lõi kép A64",
-            "gpu": "Mali-450 MP2",
-            "sound_tech": "Dolby Digital Plus; Dolby Atmos; FLAC; MP3; AAC; DTS Surround, DTS-HD; OGG",
-            "speaker_power": "2x10W",
-            "weight": 12,
-            "description_detail": "Mô tả chi tiết",
+            "item_code": "TL_01",
+            "item_name": "Tủ lạnh sharp",
+            "specifications": [
+                {
+                    "guarantee": [
+                        {
+                            "name": 12,
+                            "value": 100000
+                        }
+                    ],
+                    "itemrefrigeration_technology": {
+                        "name": "Công nghệ làm lạnh",
+                        "value": "Làm lạnh nhanh"
+                    },
+                    "itemsize": {
+                        "name": "Kích thước",
+                        "value": "1,8x1"
+                    },
+                    "itemutilities": {
+                        "name": "Tiện ích",
+                        "value": "Rã đông mềm"
+                    },
+                    "itemother_info": {
+                        "name": "Thông tin khác",
+                        "value": ""
+                    }
+                }
+            ],
             "image": [
-                "https://drive.google.com/thumbnail?id=1pqAN6yGCNHie7anazYzFhPxWROkvJxyM",
                 "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
             ]
         }
     }
 }
++ guarantee: Thông tin bảo hành
+=> name: số tháng bảo hành
+=> value: số tiền bảo hành
++ item_type: Loại mặt hàng - TV: tivi; TL: Tủ lạnh, MG: Máy giặt; DH: Điều hòa
 + item_code: Mã hàng
-+ item_name: Tên hàng
-+ org_price: Giá gốc
-+ sale_price: Giá khuyến mại
-+ size: kích thước (inches)
-+ remain_quantity: Số lượng tồn
-+ sell_quantity: Số lượng đã bán
-+ description: Mô tả
-+ resolution: Độ phân giải
-+ view: góc nhìn
-+ refresh_rate: Tốc độ làm mới
-+ power: Công suất
-+ dimension: Kích cỡ (dài x rộng)
-+ out_memory: Bộ nhớ ngoài
-+ in_memory: Bộ nhớ trong
-+ cpu: cpu
-+ gpu: gpu
-+ sound_tech: Công nghệ âm thanh
-+ weight: Trọng lượng
-+ description_detail: Mô tả chi tiết
 + image: Danh sách ảnh sản phẩm
+
+5. Lấy danh sách banner
+url + ?action=getbanner
+response
+{
+    "result": "success",
+    "data": {
+        "lst_item": {
+            "images": [
+                "https://drive.google.com/thumbnail?id=1pqAN6yGCNHie7anazYzFhPxWROkvJxyM",
+                "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM",
+                "https://drive.google.com/thumbnail?id=1SXKmDa475Mxsx9EFO_mdje-xrhMt6PmM"
+            ]
+        }
+    }
+}
 */
