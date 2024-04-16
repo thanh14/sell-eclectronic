@@ -1,10 +1,11 @@
+var lstItem = [];
+var lstItemFilter = [];
 (function ($) {
     "use strict";
 
     var url = "https://script.google.com/macros/s/AKfycbyT0UIYLArvCMuQZeiG0cYnCmDSiFterpvq1roE6sXSklprhWqVqp3S7NwYGBwtnlU/exec";
     var ul = document.querySelector('.paging');
     var allPages = 15;
-    var lstItem = [];
     var lstItemDisplay = [];
     var totalItem = 0;
     var currentPage = 1;
@@ -126,7 +127,7 @@
      * @param {*} pageIndex 
      * @returns 
      */
-    function pagingData(pageIndex){
+    function pagingData(pageIndex, listItemFilter){
         loading("show");
         if(pageIndex <= 0){
             pageIndex = 1;
@@ -140,8 +141,11 @@
         startIndex = pageIndex == 1 ? 0 : (pageIndex*pageSize - pageSize);
         endIndex = pageIndex == 1 ? pageSize : pageIndex*pageSize;
         elem(Math.floor(totalItem/pageSize) + 1, pageIndex);
-
-        lstItemDisplay = lstItem.slice(startIndex, endIndex);
+        if (listItemFilter != null) {
+            lstItemDisplay = listItemFilter.slice(startIndex, endIndex);
+        } else {
+            lstItemDisplay = lstItem.slice(startIndex, endIndex);
+        }
 
         
         $("div.lst-item div").remove();
@@ -259,6 +263,76 @@
         }
     }
     
+    $(document).ready(function(){
+        $('#sel-category').on('change', function(){
+            var selectedValue = $(this).val();
+            var divSize = document.getElementById('div-size');
+            switch(selectedValue) {
+                case "tivi":
+                    divSize.style.display = "block"
+                    break;
+                case "tulanh":
+                    divSize.style.display = "none"
+                    break;
+                case "maygiat":
+                    divSize.style.display = "none"
+                    break;
+                case "dieuhoa":
+                    divSize.style.display = "none"
+                    break;
+                default:
+                    divSize.style.display = "none"
+              }
+            // if (selectedValueArray.length > 1) {
+            // lstItemFilter = lstItem.filter(function(item) {
+            //     return parseInt(item.sale_price) >= parseInt(selectedValueArray[0]*1000000) && parseInt(item.sale_price) <=  parseInt(selectedValueArray[1]*1000000);
+            // });
+            // pagingData(1, lstItemFilter);
+            // } else {
+            //     pagingData(1);
+            // }
+        });
+        $('#sel-prices').on('change', function(){
+            var selectedValue = $(this).val();
+            var selectedValueArray = selectedValue.split('-');
+            if (selectedValueArray.length > 1) {
+            lstItemFilter = lstItem.filter(function(item) {
+                return parseInt(item.sale_price) >= parseInt(selectedValueArray[0]*1000000) && parseInt(item.sale_price) <=  parseInt(selectedValueArray[1]*1000000);
+            });
+            pagingData(1, lstItemFilter);
+            } else {
+                pagingData(1);
+            }
+        });
+        $('#sel-inches').on('change', function(){
+            var selectedValue = $(this).val();
+            if (selectedValue != null) {
+            lstItemFilter = lstItem.filter(function(item) {
+                return parseInt(item.size) == selectedValue
+            });
+            pagingData(1, lstItemFilter);
+            } else {
+                pagingData(1);
+            }
+        });
+        $('#btn-search').on('click', function(){
+            var searchValue = $('#input-search').val();
+            lstItemFilter = lstItem.filter(function(item) {
+                return item.item_name.toLowerCase().includes(searchValue.toLowerCase())
+            });
+            pagingData(1, lstItemFilter);
+          });
+    
+        $('#input-search').on('keypress', function(event){
+        if (event.which === 13) { // Kiểm tra phím Enter được nhấn
+            var searchValue = $(this).val();
+            lstItemFilter = lstItem.filter(function(item) {
+            return item.item_name.toLowerCase().includes(searchValue.toLowerCase())
+        });
+            pagingData(1, lstItemFilter);
+        }
+        });
+    });
 })(jQuery);
 
 // Product Quantity

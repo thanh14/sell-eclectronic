@@ -142,6 +142,8 @@ Promise.all([api1, api2]).then((values) => {
     
             parentDiv.appendChild(div);
         });
+        var displayinches = document.getElementById('display-inches');
+        displayinches.style.setProperty("display", "block", "important");
         var radio = document.getElementById(specification.size);
         if (radio) {
             radio.checked = true;
@@ -202,4 +204,9 @@ function loading(mode){
  */
 $('.company-name').on('click',function (event) {
 window.location.href = "index.html";
+});
+
+$('#guarantee').on('change', function(){
+    var selectedValue = $(this).val();
+    console.log(selectedValue)
 });
