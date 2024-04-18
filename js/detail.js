@@ -1,11 +1,12 @@
 function convertToVietnameseCurrency(number) {
+    console.log(number.toLocaleString('vi', {style: 'currency', currency: 'VND'}))
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
-const url = "https://script.google.com/macros/s/AKfycbyUryPrV60u6FhQmt7CO6nRwBRxylG84LWV0C885UnIxHZoFfQfEFjrdCknqfsBze4/exec"
+var url = "https://script.google.com/macros/s/AKfycbyC2LFttLv9D9cBnWC9x3sPvu5N4XnhgwR0LCqimqHb4TGfzKqMx9eoXnZJKvjILAE/exec";
 const radioOptions = []
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
-
+var listGuarantee = []
 var urlBeforeQuestionMark = questionMarkIndex !== -1 ? fullUrl.substring(0, questionMarkIndex) : fullUrl;
 function getUrlParameter(name) {
     var urlParams = new URLSearchParams(window.location.search);
@@ -14,9 +15,9 @@ function getUrlParameter(name) {
 
 var codeValue = getUrlParameter('code');
 var sizevalue = getUrlParameter('size');
-const api1 = fetch(url +'?action=getitem&item_code='+codeValue)
-console.log(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
-const api2 = fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
+var itemType  = getUrlParameter('type');
+const api1 = fetch(url +'?action=getitem')
+const api2 = fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&size='+sizevalue)
 loading("show");
 Promise.all([api1, api2]).then((values) => {
     const [listIteamSameType, itemDetail] = values;
@@ -32,7 +33,7 @@ Promise.all([api1, api2]).then((values) => {
                                   '<img class="img-fluid w-100" src="' + item.image[0] + '" alt="' + item.item_name + '">' +
                                 '</div>' +
                                 '<div class="text-center py-4">' +
-                                  '<a class="h6 text-decoration-none text-truncate" href="' + urlBeforeQuestionMark+'?code='+ item.item_code +'&size='+item.size+ '">' + item.item_name + ' - ' + item.size + ' inch' + '</a>' +
+                                  '<a class="h6 text-decoration-none text-truncate" href="' + urlBeforeQuestionMark+'?code='+ item.item_code +'&size='+item.size+'&type='+item.item_type+ '">' + item.item_name  + '</a>' +
                                   '<div class="d-flex align-items-center justify-content-center mt-2">' +
                                     '<h5>' + item.sale_price + '</h5><h6 class="text-muted ml-2"><del>' + item.org_price + '</del></h6>' +
                                   '</div>' +
@@ -47,106 +48,57 @@ Promise.all([api1, api2]).then((values) => {
     }).then((data) => {
         var lisData = data.data
         var item = lisData.item_detail;
-        console.log(item)
         var itemName = document.getElementById('item-name');
         itemName.textContent = item.item_name;
-        specifications = item.specifications
-        specifications.forEach(element => {
-            if (!radioOptions.find(option => option.id === element.size)) {
-                radioOptions.push({ id: element.size, label: element.size +" inches" });
+        var specification = item.specifications[0]
+        console.log(Object.entries(specification))
+        var tbodyElement = document.querySelector("tbody");
+        Object.entries(specification).forEach(element => {
+            if (element[0] == "item_sale_price" || element[0] == "item_org_price" ||
+            element[0] == "guarantee" || element[0] == "item_description" ||
+            element[0] == "item_description_detail" || element[0] == "item_remain_quantity" ||  element[0] == "item_sell_quantity"
+            ) {
+                return;
             }
-        });
-        var specification = specifications.filter(function(data) {
-            return data.size == sizevalue;
-        });
-        specification = specification[0]
-
+            var trElement = document.createElement("tr");
+            var tdKey = document.createElement("td");
+            tdKey.textContent = element[1].name;
+            var tdValue = document.createElement("td");
+            tdValue.textContent = element[1].value
+            trElement.appendChild(tdKey);
+            trElement.appendChild(tdValue);
+            tbodyElement.appendChild(trElement);
+        })
+        var selectElement = document.getElementById("guarantee");
+        listGuarantee = specification.guarantee
+        listGuarantee.forEach(element => {
+            var optionElement = document.createElement("option");
+            optionElement.textContent = element.name + " tháng";
+            optionElement.value = element.name
+            selectElement.appendChild(optionElement);
+        })
         var description = document.getElementById('description');
-        description.textContent = specification.description;
+        description.textContent = specification.item_description.value;
 
         var salePrice = document.getElementById('sale-price');
-        salePrice.textContent = convertToVietnameseCurrency(specification.sale_price);
+        salePrice.textContent = convertToVietnameseCurrency(specification.item_sale_price.value);
 
         var orgPrice = document.getElementById('org-price');
-        orgPrice.textContent = convertToVietnameseCurrency(specification.org_price);
+        orgPrice.textContent = convertToVietnameseCurrency(specification.item_org_price.value);
 
         var sellQuantity = document.getElementById('sell-quantity');
-        sellQuantity.textContent = specification.sell_quantity;
+        sellQuantity.textContent = specification.item_sell_quantity.value;
 
         var descriptionDetail = document.getElementById('description-detail');
-        descriptionDetail.textContent = specification.description_detail;
-
-        var resolution = document.getElementById('resolution');
-        resolution.textContent = specification.resolution;
-        
-        var view = document.getElementById('view');
-        view.textContent = specification.view;
-
-        var refreshRate = document.getElementById('refresh-rate');
-        refreshRate.textContent = specification.refresh_rate;
-        
-        var power = document.getElementById('power');
-        power.textContent = specification.power;
-
-        var dimension = document.getElementById('dimension');
-        dimension.textContent = specification.dimension;
-
-        var outMemory = document.getElementById('out-memory');
-        outMemory.textContent = specification.out_memory;
-
-        var inMemory = document.getElementById('in-memory');
-        inMemory.textContent = specification.in_memory;
-        
-        var cpu = document.getElementById('cpu');
-        cpu.textContent = specification.cpu;
-
-        var gpu = document.getElementById('gpu');
-        gpu.textContent = specification.gpu;
-
-        var soundTech = document.getElementById('sound-tech');
-        soundTech.textContent = specification.sound_tech;
-        
-        var speakerPower = document.getElementById('speaker-power');
-        speakerPower.textContent = specification.speaker_power;
-
-        var weight = document.getElementById('weight');
-        weight.textContent = specification.weight;
+        descriptionDetail.textContent = specification.item_description_detail.value;
 
         var remainQuantity = document.getElementById('remain-quantity');
-        if (specification.remain_quantity > 0) {
+        if (specification.item_remain_quantity.value > 0) {
             remainQuantity.textContent = "Còn hàng"
             remainQuantity.style.color = 'limegreen';
         } else {
             remainQuantity.textContent = "Hết hàng"
             remainQuantity.style.color = 'red';
-        }
-        const parentDiv = document.getElementById("parentDiv");
-        radioOptions.forEach(option => {
-            const radioInput = document.createElement("input");
-            radioInput.type = "radio";
-            radioInput.className = "custom-control-input";
-            radioInput.id = option.id;
-            radioInput.name = "inches";
-            radioInput.value = option.id;
-    
-            const label = document.createElement("label");
-            label.className = "custom-control-label";
-            label.htmlFor = option.id;
-            label.textContent = option.label;
-    
-            const div = document.createElement("div");
-            div.className = "custom-control custom-radio custom-control-inline";
-    
-            div.appendChild(radioInput);
-            div.appendChild(label);
-    
-            parentDiv.appendChild(div);
-        });
-        var displayinches = document.getElementById('display-inches');
-        displayinches.style.setProperty("display", "block", "important");
-        var radio = document.getElementById(specification.size);
-        if (radio) {
-            radio.checked = true;
         }
         var listImage = item.image
         const imageCarousel = document.getElementById('imageCarousel');
@@ -182,7 +134,9 @@ Promise.all([api1, api2]).then((values) => {
 
 function buyProduct() {
     var totalNumber = document.getElementById('total-number').value;
-    window.location.href = "contact.html?code="+codeValue+'&size='+sizevalue + '&number='+totalNumber;
+    var selectElement = document.getElementById("guarantee");
+
+    window.location.href = "contact.html?type="+ itemType+ "&code="+codeValue+'&size='+sizevalue + '&number='+totalNumber + '&guarantee='+selectElement.value ;
 }
 
 /**
@@ -208,5 +162,11 @@ window.location.href = "index.html";
 
 $('#guarantee').on('change', function(){
     var selectedValue = $(this).val();
-    console.log(selectedValue)
+    var salePrice = document.getElementById('sale-price');
+    listGuarantee.forEach(element => {
+        if (element.name == selectedValue) {
+            selectedValue = element.value
+        }
+    })
+    salePrice.textContent = convertToVietnameseCurrency(parseInt(selectedValue));
 });
