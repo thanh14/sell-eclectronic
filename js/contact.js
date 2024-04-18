@@ -1,13 +1,17 @@
 function convertToVietnameseCurrency(number) {
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
+<<<<<<< HEAD
+var url = "https://script.google.com/macros/s/AKfycbyC2LFttLv9D9cBnWC9x3sPvu5N4XnhgwR0LCqimqHb4TGfzKqMx9eoXnZJKvjILAE/exec";
+=======
 const url = "https://script.google.com/macros/s/AKfycbxOAeVBB8eJbhLPE2FyM3OIgceKTtrlO2yKwjCVDIMbZi3ynGOWyudcI2Ai2nF5lXQ/exec"
 const radioOptions = []
+>>>>>>> 248dbfab8d193f2a442589fb3d7a9b22ea9eadab
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
 var dataDetail = null
 var specification = null
-
+var prices = 0;
 var urlBeforeQuestionMark = questionMarkIndex !== -1 ? fullUrl.substring(0, questionMarkIndex) : fullUrl;
 function getUrlParameter(name) {
     var urlParams = new URLSearchParams(window.location.search);
@@ -17,8 +21,12 @@ function getUrlParameter(name) {
 var codeValue = getUrlParameter('code');
 var sizevalue = getUrlParameter('size');
 var number = getUrlParameter('number');
+var itemType  = getUrlParameter('type');
+
+var guaranteeValue = getUrlParameter('guarantee');
+
 loading("show");
-fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
+fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&size='+sizevalue)
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -26,19 +34,11 @@ fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
     return response.json();
   })
   .then(data => {
-    console.log(data.data.item_detail);
+    console.log(data);
     var item = data.data.item_detail
     dataDetail = item
-    specifications = item.specifications
-    specifications.forEach(element => {
-        if (!radioOptions.find(option => option.id === element.size)) {
-            radioOptions.push({ id: element.size, label: element.size +" inches" });
-        }
-    });
-    specification = specifications.filter(function(data) {
-        return data.size == sizevalue;
-    });
-    specification = specification[0]
+    var specifications = item.specifications
+    var specification = specifications[0]
     var imgElement = document.getElementById('image-item');
     imgElement.src = item.image[0];
 
@@ -46,16 +46,23 @@ fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
     itemName.textContent = item.item_name;
 
     var description = document.getElementById('description');
-    description.textContent = specification.description;
+    description.textContent = specification.item_description.value;
 
     var totalNumber = document.getElementById('total-number');
     totalNumber.textContent = number
 
+    var guarantee = document.getElementById('guarantee');
+    guarantee.textContent = guaranteeValue + " tháng"
+    specification.guarantee.forEach(element => {
+      if (element.name == guaranteeValue) {
+        prices =element.value
+      }
+    });
     var detail = document.getElementById('detail');
     detail.href  = "detail.html?code="+codeValue+'&size='+sizevalue
     
     var totalPrice = document.getElementById('total-price');
-    totalPrice.textContent = convertToVietnameseCurrency(number * specification.sale_price)
+    totalPrice.textContent = convertToVietnameseCurrency(number * prices)
     loading("hide");
   })
   .catch(error => {
@@ -71,12 +78,12 @@ fetch(url+'?action=getdetailitem&item_code='+codeValue+'&size='+sizevalue)
     var message = document.getElementById('message').value;
     if (name != '' && email !== '' && phoneNumber != '' && address != '') {
       loading("show");
-        fetch(url+'?action=insert&customer_name='+name+'&phone_number='+phoneNumber+'&item_name='+dataDetail.item_name+'&quantity='+number+'&price='+(number * specification.sale_price)+'&item_code='+dataDetail.item_code+'&address='+address+'&note='+message)
+        fetch(url+'?action=insert&customer_name='+name+'&phone_number='+phoneNumber+'&item_name='+dataDetail.item_name+'&quantity='+number+'&price='+(number * prices)+'&item_code='+dataDetail.item_code+'&address='+address+'&note='+message + '&guarantee_month='+guaranteeValue + 'tháng')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-      loading("hide");
+          loading("hide");
           return response.json();
         })
         .then(data => {
@@ -97,7 +104,7 @@ function showSuccessModal() {
   myModal.show();
   setTimeout(function() {
       myModal.hide();
-      window.location.href = "detail.html?code="+codeValue+'&size='+sizevalue;
+      window.location.href = "index.html";
     }, 2000);
 }
 
