@@ -54,7 +54,7 @@ fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&
       }
     });
     var detail = document.getElementById('detail');
-    detail.href  = "detail.html?code="+codeValue+'&size='+sizevalue
+    detail.href  = "detail.html?code="+codeValue+'&size='+sizevalue + '&type='+itemType
     
     var totalPrice = document.getElementById('total-price');
     totalPrice.textContent = convertToVietnameseCurrency(number * prices)
