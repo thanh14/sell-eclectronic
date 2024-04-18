@@ -1,5 +1,5 @@
 /*
-url: https://script.google.com/macros/s/AKfycbyUryPrV60u6FhQmt7CO6nRwBRxylG84LWV0C885UnIxHZoFfQfEFjrdCknqfsBze4/exec
+url: https://script.google.com/macros/s/AKfycbxOAeVBB8eJbhLPE2FyM3OIgceKTtrlO2yKwjCVDIMbZi3ynGOWyudcI2Ai2nF5lXQ/exec
 
 1. API đặt hàng
 url + ?action=insert&customer_name=lvtho&phone_number=0981283963&item_name=tivi_3&quantity=2&price=25000000&item_code=TV_01&address=Thái_bình&note=ghi chú
