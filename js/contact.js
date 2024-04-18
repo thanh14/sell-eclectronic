@@ -67,11 +67,10 @@ fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&
 
   function sendOrderButton() {
     var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
     var phoneNumber = document.getElementById('phone-number').value;
     var address = document.getElementById('address').value;
     var message = document.getElementById('message').value;
-    if (name != '' && email !== '' && phoneNumber != '' && address != '') {
+    if (name != '' && phoneNumber != '' && address != '') {
       loading("show");
         fetch(url+'?action=insert&customer_name='+name+'&phone_number='+phoneNumber+'&item_name='+dataDetail.item_name+'&quantity='+number+'&price='+(number * prices)+'&item_code='+dataDetail.item_code+'&address='+address+'&note='+message + '&guarantee_month='+guaranteeValue + 'tháng')
         .then(response => {
