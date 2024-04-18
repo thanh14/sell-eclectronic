@@ -1,7 +1,12 @@
 function convertToVietnameseCurrency(number) {
     return number.toLocaleString('vi', {style: 'currency', currency: 'VND'});
 }
+<<<<<<< HEAD
 var url = "https://script.google.com/macros/s/AKfycbyC2LFttLv9D9cBnWC9x3sPvu5N4XnhgwR0LCqimqHb4TGfzKqMx9eoXnZJKvjILAE/exec";
+=======
+const url = "https://script.google.com/macros/s/AKfycbxOAeVBB8eJbhLPE2FyM3OIgceKTtrlO2yKwjCVDIMbZi3ynGOWyudcI2Ai2nF5lXQ/exec"
+const radioOptions = []
+>>>>>>> 248dbfab8d193f2a442589fb3d7a9b22ea9eadab
 var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
 var dataDetail = null
