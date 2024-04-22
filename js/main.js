@@ -121,15 +121,15 @@ var paramFilter = [];
 
                     var carouselIndicators = document.querySelector("#header-carousel .carousel-indicators");
 
-                    carouselData.forEach(function(_, index) {
-                        var indicator = document.createElement("li");
-                        indicator.setAttribute("data-target", "#header-carousel");
-                        indicator.setAttribute("data-slide-to", index.toString());
-                        if (index === 0) {
-                            indicator.classList.add("active");
-                        }
-                        carouselIndicators.appendChild(indicator);
-                    });
+                    // carouselData.forEach(function(_, index) {
+                    //     var indicator = document.createElement("li");
+                    //     indicator.setAttribute("data-target", "#header-carousel");
+                    //     indicator.setAttribute("data-slide-to", index.toString());
+                    //     if (index === 0) {
+                    //         indicator.classList.add("active");
+                    //     }
+                    //     carouselIndicators.appendChild(indicator);
+                    // });
                 }
             }
         } catch (error) {
@@ -165,12 +165,23 @@ var paramFilter = [];
      * @param {*} money 
      * @returns 
      */
-    function formatMoney(money){
-       const pieces = parseFloat(money).toFixed(2).split('')
-       let ii = pieces.length - 3
-       while ((ii-=3) > 0) {
-         pieces.splice(ii, 0, ',')
+    function formatMoney(number, decimalPoint = '.'){
+    //    const pieces = parseFloat(money).toFixed().split('')
+    //    let ii = pieces.length - 3
+    //    while ((ii-=3) > 0) {
+    //      pieces.splice(ii, 0, ',')
+    //    }
+    //    return pieces.join('')
+
+    const pieces = parseFloat(number).toFixed(0).split('')
+       let ii = pieces.length - 3;
+       pieces.reverse();
+       for(let i = pieces.length - 1; i >= 0; i--){
+          if(i%3 == 0 && i != 0){
+             pieces.splice(i, 0, decimalPoint)
+          }
        }
+       pieces.reverse();
        return pieces.join('')
     }
     
@@ -251,8 +262,8 @@ var paramFilter = [];
                                     <div class="text-center py-4">
                                         <div class="h6 item-name text-decoration-none text-truncate" href="">` + itemName + `</div>
                                         <div class="align-items-center mt-2">
-                                            <h6 class="text-muted ml-2"><del>$` + formatMoney(item.org_price) + `</del>
-                                            <h5>$` + formatMoney(item.sale_price) + `</h5>
+                                            <h6 class="text-muted ml-2"><del>` + formatMoney(item.org_price) + `</del>
+                                            <h5>` + formatMoney(item.sale_price) + `</h5>
                                         </div>
                                     </div>
                                 </div>

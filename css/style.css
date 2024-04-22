@@ -9617,6 +9617,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 .product-item {
   /* transition: .5s; */
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
 }
 
 .product-action {
@@ -9681,6 +9684,19 @@ a.text-dark:hover, a.text-dark:focus {
 /* .product-item .btn:hover {
   color: #FFD333 !important;
 } */
+
+.item-box{
+  display: flex;
+}
+
+.product-item .product-img  {
+  flex: 1;
+}
+
+.product-item .product-img img  {
+  transition: .5s;
+  height: 100%;
+}
 
 .table.table-borderless thead tr,
 .table.table-borderless tbody tr:not(:last-child) {
