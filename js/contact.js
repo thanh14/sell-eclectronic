@@ -46,19 +46,24 @@ fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&
     var totalNumber = document.getElementById('total-number');
     totalNumber.textContent = number
 
-    var guarantee = document.getElementById('guarantee');
-    guarantee.textContent = guaranteeValue + " tháng"
-    specification.guarantee.forEach(element => {
-      if (element.name == guaranteeValue) {
-        prices =element.value
-      }
-    });
     var detail = document.getElementById('detail');
     detail.href  = "detail.html?code="+codeValue+'&size='+sizevalue + '&type='+itemType
-    
-    var totalPrice = document.getElementById('total-price');
-    totalPrice.textContent = convertToVietnameseCurrency(number * prices)
-    loading("hide");
+
+    var guarantee = document.getElementById('guarantee');
+    guarantee.textContent = guaranteeValue + " tháng"
+    if(specification){
+      specification.guarantee.forEach(element => {
+        if (element.name == guaranteeValue) {
+          prices =element.value
+        }
+      });
+
+      let salePrice = (specification.item_sale_price && specification.item_sale_price.value) ? specification.item_sale_price.value : 0;
+      
+      var totalPrice = document.getElementById('total-price');
+      totalPrice.textContent = convertToVietnameseCurrency(number * (prices + salePrice))
+      loading("hide");
+    }
   })
   .catch(error => {
     loading("hide");
