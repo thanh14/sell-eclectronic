@@ -7,6 +7,7 @@ var questionMarkIndex = fullUrl.indexOf('?');
 var dataDetail = null
 var specification = null
 var prices = 0;
+var salePrice = 0;
 var urlBeforeQuestionMark = questionMarkIndex !== -1 ? fullUrl.substring(0, questionMarkIndex) : fullUrl;
 function getUrlParameter(name) {
     var urlParams = new URLSearchParams(window.location.search);
@@ -46,19 +47,25 @@ fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&
     var totalNumber = document.getElementById('total-number');
     totalNumber.textContent = number
 
-    var guarantee = document.getElementById('guarantee');
-    guarantee.textContent = guaranteeValue + " tháng"
-    specification.guarantee.forEach(element => {
-      if (element.name == guaranteeValue) {
-        prices =element.value
-      }
-    });
     var detail = document.getElementById('detail');
     detail.href  = "detail.html?code="+codeValue+'&size='+sizevalue + '&type='+itemType
-    
-    var totalPrice = document.getElementById('total-price');
-    totalPrice.textContent = convertToVietnameseCurrency(number * prices)
-    loading("hide");
+
+    var guarantee = document.getElementById('guarantee');
+    guarantee.textContent = guaranteeValue + " tháng"
+    if(specification){
+      specification.guarantee.forEach(element => {
+        if (element.name == guaranteeValue) {
+          prices =element.value
+        }
+      });
+      salePrice = 0;
+
+      salePrice = (specification.item_sale_price && specification.item_sale_price.value) ? specification.item_sale_price.value : 0;
+      
+      var totalPrice = document.getElementById('total-price');
+      totalPrice.textContent = convertToVietnameseCurrency(number * (prices + salePrice))
+      loading("hide");
+    }
   })
   .catch(error => {
     loading("hide");
@@ -70,9 +77,10 @@ fetch(url+'?action=getdetailitem&item_type='+itemType+'&item_code='+codeValue+'&
     var phoneNumber = document.getElementById('phone-number').value;
     var address = document.getElementById('address').value;
     var message = document.getElementById('message').value;
+    var totalPrice = document.getElementById('total-price').value;
     if (name != '' && phoneNumber != '' && address != '') {
       loading("show");
-        fetch(url+'?action=insert&customer_name='+name+'&phone_number='+phoneNumber+'&item_name='+dataDetail.item_name+'&quantity='+number+'&price='+(number * prices)+'&item_code='+dataDetail.item_code+'&address='+address+'&note='+message + '&guarantee_month='+guaranteeValue + 'tháng')
+        fetch(url+'?action=insert&customer_name='+name+'&phone_number='+phoneNumber+'&item_name='+dataDetail.item_name+'&quantity='+number+'&price='+(number * (prices + salePrice))+'&item_code='+dataDetail.item_code+'&address='+address+'&note='+message + '&guarantee_month='+guaranteeValue + 'tháng')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
