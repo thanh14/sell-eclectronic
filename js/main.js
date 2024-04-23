@@ -104,7 +104,7 @@ var paramFilter = [];
                     listBanner.forEach(function(imageSrc, index) {
                         var carouselItem = document.createElement("div");
                         carouselItem.classList.add("carousel-item", "position-relative");
-                        carouselItem.style.height = "540px";
+                        carouselItem.style.height = "32vw";
 
                         if (index === 0) {
                             carouselItem.classList.add("active");
@@ -114,6 +114,8 @@ var paramFilter = [];
                         image.classList.add("position-absolute", "top-50", "start-50", "translate-middle");
                         image.src = imageSrc;
                         image.style.objectFit = "cover";
+                        image.style.width = "92vw";
+                        image.style.height = "39vw";
 
                         carouselItem.appendChild(image);
                         carouselInner.appendChild(carouselItem);
@@ -252,12 +254,6 @@ var paramFilter = [];
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
-                                        <div class="product-action">
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                                        </div>
                                     </div>
                                     <div class="text-center py-4">
                                         <div class="h6 item-name text-decoration-none text-truncate" href="">` + itemName + `</div>
