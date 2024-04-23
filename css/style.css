@@ -9617,6 +9617,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .product-item {
   /* transition: .5s; */
+    width: 100%;
     flex-direction: column;
     display: flex;
     justify-content: space-between;
