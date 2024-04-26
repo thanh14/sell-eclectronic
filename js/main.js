@@ -256,7 +256,7 @@ var paramFilter = [];
                                         <img class="img-fluid w-100" src="`+ item.image[0] +`" alt="">
                                     </div>
                                     <div class="text-center py-4">
-                                        <div class="h6 item-name text-decoration-none text-truncate" href="">` + itemName + `</div>
+                                        <div class="h6 item-name text-truncate" href="">` + itemName + `</div>
                                         <div class="align-items-center mt-2">
                                             <h6 class="text-muted ml-2"><del>` + formatMoney(item.org_price) + `</del>
                                             <h5>` + formatMoney(item.sale_price) + `</h5>
