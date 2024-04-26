@@ -8,8 +8,6 @@ var fullUrl = window.location.href;
 var questionMarkIndex = fullUrl.indexOf('?');
 var listGuarantee = []
 var urlBeforeQuestionMark = questionMarkIndex !== -1 ? fullUrl.substring(0, questionMarkIndex) : fullUrl;
-var gl_sale_price = 0;
-var gl_org_price = 0;
 function getUrlParameter(name) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
@@ -53,7 +51,6 @@ Promise.all([api1, api2]).then((values) => {
         var itemName = document.getElementById('item-name');
         itemName.textContent = item.item_name;
         var specification = item.specifications[0]
-        console.log(Object.entries(specification))
         var tbodyElement = document.querySelector("tbody");
         Object.entries(specification).forEach(element => {
             if (element[0] == "item_sale_price" || element[0] == "item_org_price" ||
@@ -83,18 +80,10 @@ Promise.all([api1, api2]).then((values) => {
         description.textContent = specification.item_description.value;
 
         var salePrice = document.getElementById('sale-price');
-        let fistGuarantee = 0;
-        gl_sale_price = 0;
-        gl_org_price = 0;
-        if(listGuarantee && listGuarantee.length && listGuarantee[0]){{
-            fistGuarantee = listGuarantee[0].value ? listGuarantee[0].value : 0;
-        }}
-        salePrice.textContent = convertToVietnameseCurrency(fistGuarantee + specification.item_sale_price.value);
-        gl_sale_price = specification.item_sale_price.value;
+        salePrice.textContent = convertToVietnameseCurrency(listGuarantee[0]?.value ?? specification.item_sale_price.value);
 
         var orgPrice = document.getElementById('org-price');
-        orgPrice.textContent = convertToVietnameseCurrency(specification.item_org_price.value + fistGuarantee);
-        gl_org_price = specification.item_org_price.value;
+        orgPrice.textContent = convertToVietnameseCurrency(specification.item_org_price.value);
 
         var sellQuantity = document.getElementById('sell-quantity');
         sellQuantity.textContent = specification.item_sell_quantity.value;
@@ -173,15 +162,10 @@ window.location.href = "index.html";
 $('#guarantee').on('change', function(){
     var selectedValue = $(this).val();
     var salePrice = document.getElementById('sale-price');
-    var orgPrice = document.getElementById('org-price');
-    var orgPriceDisplay = gl_org_price;
     listGuarantee.forEach(element => {
         if (element.name == selectedValue) {
-            selectedValue = ((element && element.value) ? element.value : 0) + (gl_sale_price ? gl_sale_price : 0);
-            orgPriceDisplay = orgPriceDisplay + element.value;
+            selectedValue = element.value
         }
-    });
+    })
     salePrice.textContent = convertToVietnameseCurrency(parseInt(selectedValue));
-    
-    orgPrice.textContent = convertToVietnameseCurrency(orgPriceDisplay);
 });
